@@ -27,24 +27,24 @@ const output = document.querySelector(".termout");
 
 let buffer = "";
 
-window.addEventListener("keydown", (e) => {
-  if (e.ctrlKey || e.metaKey || e.altKey) return;
+window.addEventListener("keydown", (kbdpress) => {
+  if (kbdpress.ctrlKey || kbdpress.metaKey || kbdpress.altKey) return;
 
-  if (e.key === "Backspace") {
+  if (kbdpress.key === "Backspace") {
     buffer = buffer.slice(0, -1);
     updateInput();
     return;
   }
 
-  if (e.key === "Enter") {
+  if (kbdpress.key === "Enter") {
     runCommand(buffer);
     buffer = "";
     updateInput();
     return;
   }
 
-  if (e.key.length === 1) {
-    buffer += e.key;
+  if (kbdpress.key.length === 1) {
+    buffer += kbdpress.key;
     updateInput();
   }
 });
@@ -55,7 +55,11 @@ function updateInput() {
 function runCommand(cmd) {
   if (!cmd.trim()) return;
 
-  switch (cmd.toLowerCase()) {
+  const parts = cmd.trim().split(/\s+/);
+  const command = parts[0].toLowerCase();
+  const args = parts.slice(1);
+
+  switch (command) {
     case "help":
       printLine("no help here, best of luck :)");
       break;
@@ -68,14 +72,45 @@ function runCommand(cmd) {
     case "clear":
       output.innerHTML = "";
       break;
-    case "sudo rm -rf /":
-      window.close();
+    case "sudo":
+      if (args.join(" ") === "rm -rf /") {
+        window.close();
+      } else {
+        printLine("nice try");
+      }
       break;
     case "vi":
       printLine("yes my name IS a reference to the text editor");
       break;
+    case "neofetch":
+      printLine("pretend i put cool ascii art here");
+      break;
+    case "fastfetch":
+      printLine("pretend i put cool ascii art here");
+      break;
+    case "hyfetch":
+      printLine("pretend i put cool ascii art here (but trans)");
+      break;
+    case "screenfetch":
+      printLine("pretend i put cool ascii art here");
+      break;
+    case "fortune":
+      printLine("pretend i made a witty joke here");
+      break;
+    case "cd":
+      printLine("nah");
+      break;
+    case "ls":
+      printLine("nah");
+      break;
+    case "echo":
+      printLine(args.join(" "));
+      break;
+    case "cat":
+      printLine("nah");
+      break;
     default:
-      printLine(`command not found: ${cmd}`);
+      printLine(`command not found: ${command}`);
   }
 }
 
