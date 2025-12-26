@@ -8,11 +8,10 @@ html {
 }
 
 .bg {
-    /* background: url(https://files.catbox.moe/0ud7y6.jpg); */
+    background: url(https://raw.githubusercontent.com/ro0sterduck/sixweb/refs/heads/main/bg.jpg);
     position: fixed;
     inset: 0;
     z-index: -1;
-    background: url(./bg.jpg);
     background-size: cover;
     will-change: transform;
     background-position: center;
