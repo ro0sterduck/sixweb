@@ -3,6 +3,7 @@ function goTo(id) {
     behavior: "smooth",
     inline: "center",
   });
+  parallax(id);
 }
 
 window.addEventListener("load", () => {
@@ -12,27 +13,12 @@ window.addEventListener("load", () => {
     inline: "center",
     block: "nearest",
   });
-
-  const bg = document.querySelector(".bg");
-  const container = document.querySelector(".container");
+  parallaxStart();
 });
 
 const inputSpan = document.getElementById("input");
 const output = document.querySelector(".termout");
 
-const bg = document.querySelector(".bg");
-
-let bghor = 0;
-
-function updateBG() {
-  bg.style.transform = `scale(1.05) translateX(${bghor}px)`;
-}
-window.addEventListener("scroll", () => {
-  bghor = -container.scrollLeft * 0.005;
-  updateBG();
-});
-
-updateBG();
 let buffer = "";
 
 window.addEventListener("keydown", (kbdpress) => {
@@ -177,3 +163,37 @@ function scaleApp() {
 
 window.addEventListener("resize", scaleApp);
 window.addEventListener("load", scaleApp);
+
+const bg = document.querySelector(".bg");
+
+function parallax(id) {
+  let offsetX = 0;
+  let offsetY = 0;
+  switch (id) {
+    case "home":
+      offsetX = 30;
+      offsetY = 0;
+      break;
+    case "contact":
+      offsetX = 0;
+      offsetY = 0;
+      break;
+    case "projects":
+      offsetX = -30;
+      offsetY = 0;
+      break;
+    case "blog":
+      offsetX = -60;
+      offsetY = 0;
+      break;
+  }
+
+  bg.style.transition = "transform 0.5s ease";
+  bg.style.transform = `scale(1.05) translate(${offsetX}px, ${offsetY}px)`;
+}
+function parallaxStart(id) {
+  let offsetX = 30;
+  let offsetY = 0;
+  bg.style.transition = "transform";
+  bg.style.transform = `scale(1.05) translate(${offsetX}px, ${offsetY}px)`;
+}
